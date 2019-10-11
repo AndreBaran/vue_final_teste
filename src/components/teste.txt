@@ -1,0 +1,9 @@
+    {
+      "id": "id5",
+      "description": "Interview with James",
+      "location": "",
+      "subject": "Peter",
+      "calendar": "Room 1",
+      "start": "2019-10-4 11:00",
+      "end": "2019-10-4 15:00"
+  }

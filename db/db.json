@@ -1,0 +1,26 @@
+{
+  "apontamentos": [
+    {
+      "start": "2019-10-03T21:00:00.000Z",
+      "end": "2019-10-03T23:30:00.000Z",
+      "id": "1626-21-21-30-25",
+      "about": "",
+      "address": "ooo",
+      "name": "ooo",
+      "style": "",
+      "status": "busy",
+      "curso": "apontametos"
+    },
+    {
+      "start": "2019-10-01T12:00:00.000Z",
+      "end": "2019-10-01T14:30:00.000Z",
+      "id": "2025-28-26-29-25",
+      "about": "",
+      "address": "rrr",
+      "name": "eee",
+      "style": null,
+      "status": "busy",
+      "curso": "apontametos"
+    }
+  ]
+}

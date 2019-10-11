@@ -8,8 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
-    "vue": "^2.6.10"
+    "jquery": "^3.4.1",
+    "jqwidgets-scripts": "^8.2.0",
+    "popper.js": "^1.15.0",
+    "vue": "^2.6.10",
+    "vue-sidebar-menu": "^4.2.3",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
