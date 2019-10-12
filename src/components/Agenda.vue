@@ -1,35 +1,34 @@
 <template>
  
 <div>
- <div class="container-fluid">
+ <div class="container-fluid"  v-on:keyup.alt="exibirFormularioCriarTarefa">
   <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
+          
           <li class="nav-item">
-            <a class="nav-link active" href="https://getbootstrap.com/docs/4.3/examples/dashboard/#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              Dashboard <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://getbootstrap.com/docs/4.3/examples/dashboard/#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-              Orders
-            </a>
-          </li>
-         
+              <button type="button" class="btn btn-dark" v-on:click="exibirFormularioCriarTarefa();msg('Carregando dados do Banco');">Carregar Dados Banco</button>            
+          </li>  
+           <li class="nav-item">
+              <button type="button" class="btn btn-dark" v-on:click="criarTarefaTeste();msg('Salvando dados no Banco')">Salvar Dados</button>            
+          </li>  
+           <li class="nav-item">
+              <button type="button" class="btn btn-dark" v-on:click="deletarTarefa();msg('Escluindo dados do Banco')">Apagar Dados</button>            
+          </li>         
         </ul>
 
         
       </div>
     </nav>
- <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
    
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         
-        <div class="btn-toolbar mb-2 mb-md-0">
+        <div 
+        style="background-image:url(./fundo.jpg)">
+        <img src="./quadro.png" alt="some text" width=800 height=100>
           <JqxScheduler ref="myScheduler"
            style="display: block; width: 1078px; height: 455px"
                 :source="dataAdapter" :date="date"  
@@ -47,30 +46,7 @@
     </main>
   </div>
 </div> 
-<div class="col-sm-2">
-                <button 
-                    class="btn btn-primary float-right"
-                    @click="exibirFormularioCriarTarefa">
-                        <i class="fa fa-plus mr-2"></i>
-                        <span>Criar</span>
-                </button>
-            </div>
-    <div class="col-sm-2">
-                <button 
-                    class="btn btn-primary float-right"
-                    @click="criarTarefaTeste">
-                        <i class="fa fa-plus mr-2"></i>
-                        <span>salvar</span>
-                </button>
-            </div>  
-<div class="col-sm-2">
-                <button 
-                    class="btn btn-primary float-right"
-                    @click="deletarTarefa">
-                        <i class="fa fa-plus mr-2"></i>
-                        <span>Deletar</span>
-                </button>
-            </div>  
+ 
 
 
                   
@@ -95,7 +71,7 @@ import store from './../store'
             return {
                 exportSettings: { fileName: null},
 				getWidth: '90%',
-                date: new jqx.date(2019, 10, 4),
+                date: new jqx.date(2019, 10, 14),
                 apontamentosLista: [],
                 appointmentDataFields: 
                 {
@@ -234,18 +210,33 @@ import store from './../store'
 
                    
                 },
+                msg :function (texto) {
+                 alert(texto)       
+                },
                 async deletarTarefa(event) {
-                    const confirmar = window.confirm(`Deseja deletar a tarefa ?`)
+                    const confirmar = window.confirm(`Deseja deletar a agendamento ?`)
                     if (confirmar) {
                         debugger
-                        axios.delete(`/apontamentos/2630-30-26-17-22`)
+                        var obj = this.$store.state.apontamentos;
+                            var  i; 
+                            debugger;
+                            for (i = 0; i < obj.length; i++) {
+                            this.$refs.myScheduler.ensureAppointmentVisible(obj[i].id);
+                            this.$refs.myScheduler.deleteAppointment( obj[i].id);
+                            axios.delete(`/apontamentos/${obj[i].id}`)
                             .then(response => {
-                                console.log(`DELETE /apontamentos/2630-30-26-17-22`, response)
+                                console.log(`DELETE /apontamentos/${obj[i].id}`, response)
                                // const indice = this.tarefas.findIndex(t => t.id === apontamento.id)
-                               const indice = this.$store.state.apontamentos.findIndex(t => t.id === '2630-30-26-17-22')
-                               this.$refs.myScheduler.deleteAppointment('2630-30-26-17-22');
+                               const indice = this.$store.state.apontamentos.findIndex(t => t.id === obj[i].id)
+                               this.$refs.myScheduler.deleteAppointment(obj[i].id);
                                this.$store.state.apontamentos.splice(indice, 1)
                             })
+                             debugger;   
+
+                         }
+
+
+                        
                     }
                 },
                 editarTarefa(apontamento) {
